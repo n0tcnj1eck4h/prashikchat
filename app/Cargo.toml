@@ -1,0 +1,14 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+eframe = "0.32.0"
+egui = "0.32.0"
+egui_extras = { version = "0.32.0", features = ["all_loaders"] }
+ewebsock = "0.8.0"
+fake = { version = "4.4.0", features = ["derive"] }
+common = { path = "../common" }
+rfd = "0.15.4"
+image = "0.25.6"
