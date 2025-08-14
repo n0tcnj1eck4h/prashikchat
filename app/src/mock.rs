@@ -14,16 +14,16 @@ pub fn mock_guilds() -> Vec<Guild> {
     members.insert(
         1,
         GuildMember {
-            name: "Fresko".to_string(),
-            avatar_url: "https://cdn.donmai.us/original/25/f1/__yua_serufu_and_ted_kaczynski_real_life_and_1_more_drawn_by_drawfag__25f156d8dc5df521a04e0000719eb6f0.png".to_string(),
+            name: "Naruto".to_string(),
+            avatar_url: "https://cdn.donmai.us/sample/04/bf/__uzumaki_naruto_naruto_drawn_by_nanxdaime__sample-04bf37f6579545a0cb592d06d5e0a5a2.jpg".to_string(),
         },
     );
 
     members.insert(
         2,
         GuildMember {
-            name: "Awesome person".to_string(),
-            avatar_url: "https://a.ppy.sh/7562902".to_string(),
+            name: "Hinata".to_string(),
+            avatar_url: "https://cdn.discordapp.com/attachments/1332138826273001472/1405609893250994337/RDMOkNv.jpg?ex=689f73b9&is=689e2239&hm=322e857411f947cb1eaa743cd48358a138f8c009c46db33459f4c270c77a8d98&".to_string(),
         },
     );
 

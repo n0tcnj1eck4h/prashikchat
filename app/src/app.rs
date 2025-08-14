@@ -34,13 +34,20 @@ use egui::Vec2;
 use egui_extras::install_image_loaders;
 use std::sync::Arc;
 
+pub enum CurrentModal {
+    CreateOrJoinModal,
+    CreateModal,
+    JoinModal,
+}
+
 pub struct App {
     pub buffer: String,
+    pub guildImageBuffer: String,
     pub guilds: Vec<Guild>,
     pub selected_guild: Option<usize>,
     pub client: Client,
     pub show_members: bool,
-    pub show_new_guild_modal: bool,
+    pub show_current_modal: Option<CurrentModal>,
     pub me: u32,
 }
 
@@ -54,11 +61,12 @@ impl App {
 
         App {
             buffer: String::new(),
+            guildImageBuffer: String::new(),
             guilds: mock_guilds(),
             selected_guild: None,
             client,
             show_members: true,
-            show_new_guild_modal: false,
+            show_current_modal: None,
             me: 1,
         }
     }
@@ -92,7 +100,7 @@ impl eframe::App for App {
             GuildsPanelResponse::Home => self.selected_guild = None,
             GuildsPanelResponse::Guild(i) => self.selected_guild = Some(i),
             GuildsPanelResponse::New => {
-                self.show_new_guild_modal = true;
+                self.show_current_modal = Some(CurrentModal::CreateOrJoinModal);
             }
         }
 
@@ -148,15 +156,68 @@ impl eframe::App for App {
             });
         }
 
-        if self.show_new_guild_modal {
-            let response = Modal::new("new guild modal".into()).show(ctx, |ui| {
-                ui.heading("haii");
-            });
-            if response.backdrop_response.clicked() {
-                self.show_new_guild_modal = false;
+        if let Some(ref horse) = self.show_current_modal {
+            match horse {
+                CurrentModal::CreateOrJoinModal => {
+                    let response =
+                        Modal::new("create or join guild modal".into()).show(ctx, |ui| {
+                            let mut ret = None;
+                            ui.vertical(|ui| {
+                                ui.heading("Create or join a server");
+                                ui.separator();
+                                ui.vertical_centered_justified(|ui| {
+                                    if ui.button("Create").clicked() {
+                                        ret = Some(0)
+                                    };
+                                    if ui.button("Join").clicked() {
+                                        ret = Some(1)
+                                    };
+                                })
+                            });
+                            return ret;
+                        });
+                    if response.backdrop_response.clicked() {
+                        self.show_current_modal = None;
+                    }
+                    if response.inner == Some(0) {
+                        self.show_current_modal = Some(CurrentModal::CreateModal)
+                    };
+                    if response.inner == Some(1) {
+                        self.show_current_modal = Some(CurrentModal::JoinModal)
+                    };
+                }
+                CurrentModal::CreateModal => {
+                    let response = Modal::new("create guild modal".into()).show(ctx, |ui| {
+                        ui.vertical(|ui| {
+                            ui.heading("Create a server");
+                            ui.separator();
+                            ui.vertical(|ui| {
+                                ui.label("Server picture");
+                                ui.horizontal(|ui| {
+                                    if ui.button("Pick image").clicked() {
+                                        let pic_path = rfd::FileDialog::new().pick_file();
+                                        if let Some(horse) = pic_path {
+                                            self.guildImageBuffer =
+                                                horse.to_string_lossy().to_string();
+                                        }
+                                    }
+                                    ui.label(&self.guildImageBuffer);
+                                });
+
+                                ui.label("Server name");
+                                ui.text_edit_singleline(&mut self.buffer); // CHANGE BUFFER LATAR
+                                ui.label("Server description");
+                                ui.text_edit_singleline(&mut self.buffer); // CHANGE BUFFER LATAR
+                            })
+                        });
+                    });
+                    if response.backdrop_response.clicked() {
+                        self.show_current_modal = None;
+                    }
+                }
+                CurrentModal::JoinModal => {}
             }
         }
-
         loop {
             match self.client.recieve() {
                 RecvResult::OkNone => {
