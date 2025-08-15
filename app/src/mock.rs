@@ -27,6 +27,22 @@ pub fn mock_guilds() -> Vec<Guild> {
         },
     );
 
+    members.insert(
+        3,
+        GuildMember {
+            name: "Susuke".to_string(),
+            avatar_url: "https://cdn.donmai.us/original/ef/46/__uchiha_sasuke_naruto_drawn_by_user_tmsf7747__ef463210de5702c88049cdf119b63daf.jpg".to_string(),
+        },
+    );
+
+    members.insert(
+        4,
+        GuildMember {
+            name: "Chiyo Mihama".to_string(),
+            avatar_url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F89%2Ff4%2Fa5%2F89f4a54f95d04aebba4e9cadd0082e39.jpg&f=1&nofb=1&ipt=d14a02a9ef70d9cb2cd87f2173da2235264c7a13a30258fc105ff1cf80608d84".to_string(),
+        },
+    );
+
     let guilds = vec![Guild {
         id: 1,
         name: "Fresko servr".to_string(),

@@ -65,7 +65,7 @@ impl Client {
                         }
                     }
                 }
-                return RecvResult::OkNone;
+                RecvResult::OkNone
             }
         }
     }

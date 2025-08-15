@@ -19,7 +19,7 @@ impl<'a> GuildButton<'a> {
     }
 
     pub fn from_url(image: &'a str) -> GuildButton<'a> {
-        GuildButton(Image::new(image), false)
+        Self::new(Image::new(image))
     }
 
     pub fn selected(mut self, selected: bool) -> Self {

@@ -45,7 +45,7 @@ use eframe::NativeOptions;
 fn main() {
     let native_options = NativeOptions::default();
     eframe::run_native(
-        "poopchat",
+        "not poopchat",
         native_options,
         Box::new(|cc| Ok(Box::new(app::App::new(cc)))),
     )

@@ -7,3 +7,6 @@ edition = "2024"
 axum = { version = "0.8.4", features = ["ws"] }
 tokio = { version = "1.47.1", features = ["rt", "macros", "full"] }
 common = { path = "../common" }
+sqlx = { version = "0.8.6", features = ["postgres"] }
+dotenvy = "0.15.7"
+tracing = "0.1.41"
